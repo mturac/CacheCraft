@@ -93,27 +93,50 @@ function collapsePreferred(candidates: Candidate[]): Candidate[] {
   });
 }
 
-function assertAnthropicTtlOrder(
-  breakpoints: Candidate[]
-): void {
+function anthropicTtlOrderIsValid(breakpoints: Candidate[]): boolean {
   let shortSeen = false;
   for (const breakpoint of [...breakpoints].sort((left, right) => left.sectionIndex - right.sectionIndex)) {
     if (breakpoint.section.cache.horizon === "short") {
       shortSeen = true;
     } else if (shortSeen) {
-      throw new CacheCraftError(
-        "CC_ANTHROPIC_TTL_ORDER",
-        "Anthropic requires long cache TTL breakpoints to appear before short TTL breakpoints.",
-        {
-          details: {
-            sectionId: breakpoint.section.id,
-            horizon: breakpoint.section.cache.horizon
-          }
-        }
-      );
+      return false;
     }
   }
+  return true;
+}
 
+function assertAnthropicTtlOrder(breakpoints: Candidate[]): void {
+  if (anthropicTtlOrderIsValid(breakpoints)) {
+    return;
+  }
+
+  const sorted = [...breakpoints].sort((left, right) => left.sectionIndex - right.sectionIndex);
+  let shortSeen = false;
+  const offender = sorted.find((breakpoint) => {
+    if (breakpoint.section.cache.horizon === "short") {
+      shortSeen = true;
+      return false;
+    }
+    return shortSeen;
+  });
+
+  if (offender === undefined) {
+    throw new CacheCraftError(
+      "CC_INTERNAL_BREAKPOINT_ERROR",
+      "Anthropic TTL-order violation could not be resolved to a breakpoint."
+    );
+  }
+
+  throw new CacheCraftError(
+    "CC_ANTHROPIC_TTL_ORDER",
+    "Anthropic requires long cache TTL breakpoints to appear before short TTL breakpoints.",
+    {
+      details: {
+        sectionId: offender.section.id,
+        horizon: offender.section.cache.horizon
+      }
+    }
+  );
 }
 
 export function selectBreakpoints(
@@ -194,19 +217,40 @@ export function selectBreakpoints(
     );
   }
 
+  if (provider === "anthropic") {
+    assertAnthropicTtlOrder(required);
+  }
+
   const preferred = collapsePreferred(
     candidates.filter((candidate) => candidate.section.cache.mode === "preferred")
   );
   const remaining = Math.max(0, budget - required.length);
-  const selectedPreferred = preferred.slice(0, remaining);
-  for (const dropped of preferred.slice(remaining)) {
-    diagnostics.push({
-      code: "CC102_PREFERRED_BREAKPOINT_DROPPED",
-      severity: "warning",
-      message: `Preferred breakpoint after section ${dropped.section.id} was dropped to fit provider ${provider}'s write-slot budget.`,
-      sectionId: dropped.section.id,
-      details: { provider, budget }
-    });
+  const selectedPreferred: Candidate[] = [];
+
+  for (const candidate of preferred) {
+    if (selectedPreferred.length >= remaining) {
+      diagnostics.push({
+        code: "CC102_PREFERRED_BREAKPOINT_DROPPED",
+        severity: "warning",
+        message: `Preferred breakpoint after section ${candidate.section.id} was dropped to fit provider ${provider}'s write-slot budget.`,
+        sectionId: candidate.section.id,
+        details: { provider, budget }
+      });
+      continue;
+    }
+
+    if (provider === "anthropic" && !anthropicTtlOrderIsValid([...required, ...selectedPreferred, candidate])) {
+      diagnostics.push({
+        code: "CC102_PREFERRED_BREAKPOINT_DROPPED",
+        severity: "warning",
+        message: `Preferred breakpoint after section ${candidate.section.id} was dropped because it would violate Anthropic TTL ordering.`,
+        sectionId: candidate.section.id,
+        details: { provider, reason: "ttl-order" }
+      });
+      continue;
+    }
+
+    selectedPreferred.push(candidate);
   }
 
   const selectedCandidates = [...required, ...selectedPreferred]
