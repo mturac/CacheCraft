@@ -62,6 +62,27 @@ test("Anthropic rejects long TTL breakpoints after short TTL breakpoints", () =>
   }, { provider: "anthropic" }), (error) => error?.code === "CC_ANTHROPIC_TTL_ORDER");
 });
 
+test("Anthropic drops a preferred long TTL breakpoint after a required short TTL breakpoint", () => {
+  const result = compilePromptPlan({
+    schemaVersion: "1",
+    id: "ttl-preferred-drop",
+    version: "1",
+    sections: [
+      section("short-required", "global", "required", "short"),
+      {
+        ...section("long-preferred", "deployment", "preferred", "long"),
+        after: ["short-required"]
+      }
+    ]
+  }, { provider: "anthropic" });
+
+  assert.deepEqual(
+    result.manifest.breakpoints.map((entry) => entry.sectionId),
+    ["short-required"]
+  );
+  assert.ok(result.diagnostics.some((entry) => entry.code === "CC102_PREFERRED_BREAKPOINT_DROPPED"));
+});
+
 test("OpenAI implicit mode reserves one of four write slots", () => {
   const sections = [
     section("a", "global", "required"),
