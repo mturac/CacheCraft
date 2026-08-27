@@ -1,5 +1,9 @@
 # CacheCraft
 
+<p align="center">
+  <img src="docs/assets/cachecraft-hero.jpg" alt="CacheCraft — deterministic cache-aware prompt compiler" width="100%" />
+</p>
+
 [![CI](https://github.com/mturac/CacheCraft/actions/workflows/ci.yml/badge.svg)](https://github.com/mturac/CacheCraft/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 
@@ -355,7 +359,8 @@ CacheCraft:
 - supports top-level automatic caching;
 - reserves automatic caching's write slot unless the final required explicit breakpoint has the same TTL and makes automatic caching a no-op;
 - replaces a redundant preferred final marker with the automatic boundary;
-- rejects conflicting final TTLs and invalid long-after-short layouts;
+- drops a preferred breakpoint when keeping it would violate Anthropic's long-before-short TTL ordering;
+- rejects conflicting final TTLs and invalid required long-after-short layouts;
 - records whether the automatic boundary is active or a no-op.
 
 ## Cache contract manifest
@@ -382,7 +387,7 @@ It records:
 | Code | Meaning |
 |---|---|
 | `CC101_VOLATILE_BEFORE_STABLE` | Preserved/dependent ordering forces volatile instructions before more stable content |
-| `CC102_PREFERRED_BREAKPOINT_DROPPED` | Provider write-slot capacity dropped a preferred explicit boundary |
+| `CC102_PREFERRED_BREAKPOINT_DROPPED` | Provider capacity or TTL ordering dropped a preferred explicit boundary |
 | `CC103_CACHE_HORIZON_COLLAPSED` | Provider cannot preserve distinct logical TTL horizons |
 | `CC104_PREFIX_TOKEN_COUNT_ESTIMATED` | Counts use the deterministic character estimator rather than a provider tokenizer |
 | `CC105_NO_CACHE_BREAKPOINT` | No explicit boundary was selected |
