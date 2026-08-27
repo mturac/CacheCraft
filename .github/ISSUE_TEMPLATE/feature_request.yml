@@ -1,0 +1,42 @@
+name: Feature request
+description: Propose a focused compiler, manifest, CLI, or provider-portability capability.
+title: "feat: "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: Describe the concrete cache-layout or portability problem, not only the proposed implementation.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+      description: Include the desired input, output, diagnostics, or error semantics.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Explain existing CacheCraft behavior or external tools that do not solve the problem.
+    validations:
+      required: true
+
+  - type: textarea
+    id: provider-evidence
+    attributes:
+      label: Provider evidence
+      description: For provider-specific requests, link official documentation and identify the relevant contract.
+
+  - type: checkboxes
+    id: scope
+    attributes:
+      label: Scope confirmation
+      options:
+        - label: This request does not require CacheCraft to send provider requests, accept credentials, or observe live traffic.
+          required: true
