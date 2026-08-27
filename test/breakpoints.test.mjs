@@ -67,6 +67,8 @@ test("Anthropic drops a preferred long TTL breakpoint after a required short TTL
     schemaVersion: "1",
     id: "ttl-preferred-drop",
     version: "1",
+    model: "provider-model",
+    maxTokens: 256,
     sections: [
       section("short-required", "global", "required", "short"),
       {
