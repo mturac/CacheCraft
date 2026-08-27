@@ -1,7 +1,7 @@
 # CacheCraft
 
 <p align="center">
-  <img src="docs/assets/cachecraft-hero.jpg" alt="CacheCraft — deterministic cache-aware prompt compiler" width="100%" />
+  <img src="docs/assets/cachecraft-hero.svg" alt="CacheCraft — deterministic cache-aware prompt compiler" width="100%" />
 </p>
 
 [![CI](https://github.com/mturac/CacheCraft/actions/workflows/ci.yml/badge.svg)](https://github.com/mturac/CacheCraft/actions/workflows/ci.yml)

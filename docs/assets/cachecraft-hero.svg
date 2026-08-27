@@ -1,0 +1,186 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1536" height="860" viewBox="0 0 1536 860" role="img" aria-labelledby="title desc">
+  <title id="title">CacheCraft — deterministic cache-aware prompt compiler</title>
+  <desc id="desc">A visual overview of CacheCraft showing cache-first prompt layout, provider-aware compilation, deterministic output, and before versus after prefix reuse.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#07111f"/>
+      <stop offset="0.55" stop-color="#0b1424"/>
+      <stop offset="1" stop-color="#111a2d"/>
+    </linearGradient>
+    <linearGradient id="brand" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2f80ed"/>
+      <stop offset="0.55" stop-color="#6c63ff"/>
+      <stop offset="1" stop-color="#a855f7"/>
+    </linearGradient>
+    <linearGradient id="stable" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#5aa9ff"/>
+      <stop offset="1" stop-color="#9bc7ff"/>
+    </linearGradient>
+    <linearGradient id="good" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#16a34a"/>
+      <stop offset="1" stop-color="#22c55e"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="18" flood-color="#020617" flood-opacity="0.28"/>
+    </filter>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#020617" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+
+  <rect width="1536" height="860" rx="28" fill="#f8fafc"/>
+  <rect width="1536" height="350" rx="28" fill="url(#bg)"/>
+  <rect y="322" width="1536" height="28" fill="url(#bg)"/>
+
+  <!-- Brand mark -->
+  <g transform="translate(42 42)">
+    <path d="M52 0 96 25v24L75 61V38L52 25 21 43v36l31 18 23-13V62l21 12v24l-44 25L0 93V31Z" fill="url(#brand)"/>
+    <circle cx="52" cy="61" r="22" fill="#07111f"/>
+  </g>
+
+  <text x="164" y="96" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="64" font-weight="800" fill="#f8fafc">CacheCraft</text>
+  <text x="164" y="142" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="25" font-weight="500" fill="#cbd5e1">Deterministic, cache-aware prompt compiler for LLM inference at scale.</text>
+  <text x="54" y="205" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="25" font-weight="700" fill="#8ba8ff">Write once. Compile right. Cache more. Spend less.</text>
+
+  <!-- Feature cards -->
+  <g filter="url(#soft)">
+    <rect x="54" y="232" width="236" height="86" rx="14" fill="#111b2b" stroke="#26344a"/>
+    <circle cx="92" cy="275" r="23" fill="#172338"/>
+    <circle cx="92" cy="275" r="13" fill="none" stroke="#dbeafe" stroke-width="3"/>
+    <path d="M92 259v7M92 284v7M76 275h7M101 275h7" stroke="#dbeafe" stroke-width="2.5" stroke-linecap="round"/>
+    <text x="126" y="266" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="16" font-weight="700" fill="#f8fafc">Cache First</text>
+    <text x="126" y="290" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14" fill="#cbd5e1">Stable first. Volatile last.</text>
+  </g>
+
+  <g filter="url(#soft)">
+    <rect x="306" y="232" width="236" height="86" rx="14" fill="#111b2b" stroke="#26344a"/>
+    <circle cx="344" cy="275" r="23" fill="#172338"/>
+    <path d="M344 257 356 263v13c0 9-5 15-12 19-7-4-12-10-12-19v-13Z" fill="none" stroke="#8fb2ff" stroke-width="2.5"/>
+    <text x="378" y="266" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="16" font-weight="700" fill="#f8fafc">Provider Aware</text>
+    <text x="378" y="290" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14" fill="#cbd5e1">OpenAI + Anthropic contracts.</text>
+  </g>
+
+  <g filter="url(#soft)">
+    <rect x="558" y="232" width="236" height="86" rx="14" fill="#111b2b" stroke="#26344a"/>
+    <circle cx="596" cy="275" r="23" fill="#172338"/>
+    <path d="m590 266-8 9 8 9M602 266l8 9-8 9" fill="none" stroke="#9aaeff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="630" y="266" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="16" font-weight="700" fill="#f8fafc">Deterministic</text>
+    <text x="630" y="290" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14" fill="#cbd5e1">Same input. Same output.</text>
+  </g>
+
+  <!-- Code panel -->
+  <g filter="url(#shadow)">
+    <rect x="822" y="28" width="668" height="290" rx="18" fill="#0d1522" stroke="#334155"/>
+    <circle cx="850" cy="54" r="6" fill="#ef4444"/>
+    <circle cx="870" cy="54" r="6" fill="#f59e0b"/>
+    <circle cx="890" cy="54" r="6" fill="#22c55e"/>
+    <text x="920" y="60" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="15" fill="#e2e8f0">$ cachecraft compile plan.json --provider openai-responses</text>
+    <rect x="846" y="80" width="620" height="210" rx="10" fill="#121d2c" stroke="#253247"/>
+    <text x="868" y="111" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="15" fill="#94a3b8">{</text>
+    <text x="888" y="138" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="15" fill="#fbbf24">"contract"</text>
+    <text x="982" y="138" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="15" fill="#cbd5e1">: {</text>
+    <text x="910" y="165" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="15" fill="#fbbf24">"breakpoints"</text>
+    <text x="1035" y="165" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="15" fill="#cbd5e1">: ["bp_0", "bp_9361"],</text>
+    <text x="910" y="192" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="15" fill="#fbbf24">"cache_key"</text>
+    <text x="1014" y="192" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="15" fill="#7dd3fc">: "session/customer-42"</text>
+    <text x="888" y="219" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="15" fill="#cbd5e1">},</text>
+    <text x="888" y="246" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="15" fill="#fbbf24">"payload"</text>
+    <text x="970" y="246" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="15" fill="#cbd5e1">: {</text>
+    <text x="910" y="273" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="15" fill="#7dd3fc">"provider": "openai-responses"</text>
+    <text x="868" y="300" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="15" fill="#94a3b8">}</text>
+  </g>
+
+  <!-- Lower section -->
+  <text x="54" y="405" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="25" font-weight="800" fill="#111827">How CacheCraft works</text>
+
+  <g transform="translate(54 435)">
+    <rect width="900" height="158" rx="18" fill="#ffffff" stroke="#dbe4f0" filter="url(#soft)"/>
+    <!-- Step 1 -->
+    <circle cx="74" cy="64" r="30" fill="#eff6ff" stroke="#60a5fa" stroke-width="2"/>
+    <path d="M62 49h19l8 8v22H62Z" fill="none" stroke="#2563eb" stroke-width="2"/><path d="M81 49v10h8" fill="none" stroke="#2563eb" stroke-width="2"/>
+    <text x="122" y="50" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="15" font-weight="800" fill="#111827">1. Write intent</text>
+    <text x="122" y="74" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" fill="#475569">Provider-neutral plan</text>
+    <text x="122" y="94" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" fill="#475569">with cache lifetimes.</text>
+    <path d="M256 64h38" stroke="#94a3b8" stroke-width="2"/><path d="m287 57 8 7-8 7" fill="none" stroke="#94a3b8" stroke-width="2"/>
+    <!-- Step 2 -->
+    <circle cx="340" cy="64" r="30" fill="#f0fdf4" stroke="#4ade80" stroke-width="2"/>
+    <path d="m340 45 18 10v20l-18 10-18-10V55Z" fill="none" stroke="#16a34a" stroke-width="2"/><path d="m322 55 18 10 18-10M340 65v20" fill="none" stroke="#16a34a" stroke-width="2"/>
+    <text x="388" y="50" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="15" font-weight="800" fill="#111827">2. Compile</text>
+    <text x="388" y="74" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" fill="#475569">Order, normalize,</text>
+    <text x="388" y="94" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" fill="#475569">place breakpoints.</text>
+    <path d="M514 64h38" stroke="#94a3b8" stroke-width="2"/><path d="m545 57 8 7-8 7" fill="none" stroke="#94a3b8" stroke-width="2"/>
+    <!-- Step 3 -->
+    <circle cx="602" cy="64" r="30" fill="#faf5ff" stroke="#c084fc" stroke-width="2"/>
+    <path d="m594 53-10 11 10 11M610 53l10 11-10 11" fill="none" stroke="#7c3aed" stroke-width="2.4"/>
+    <text x="650" y="50" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="15" font-weight="800" fill="#111827">3. Provider payload</text>
+    <text x="650" y="74" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" fill="#475569">OpenAI / Anthropic</text>
+    <text x="650" y="94" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" fill="#475569">request + manifest.</text>
+    <text x="34" y="132" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" font-weight="700" fill="#2563eb">Offline</text>
+    <text x="94" y="132" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" fill="#64748b">•</text>
+    <text x="112" y="132" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" font-weight="700" fill="#16a34a">Zero runtime dependencies</text>
+    <text x="287" y="132" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" fill="#64748b">•</text>
+    <text x="305" y="132" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" font-weight="700" fill="#7c3aed">Deterministic contract hashes</text>
+  </g>
+
+  <!-- Why it matters -->
+  <g transform="translate(980 378)">
+    <text x="0" y="27" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="25" font-weight="800" fill="#111827">Why it matters</text>
+    <rect x="0" y="56" width="510" height="215" rx="18" fill="#ffffff" stroke="#dbe4f0" filter="url(#soft)"/>
+    <text x="22" y="90" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14" font-weight="700" fill="#334155">Unoptimized prompt</text>
+    <rect x="154" y="72" width="108" height="26" rx="7" fill="#fb7185"/>
+    <text x="181" y="90" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12" font-weight="700" fill="#ffffff">volatile</text>
+    <rect x="268" y="72" width="214" height="26" rx="7" fill="url(#stable)"/>
+    <text x="333" y="90" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12" font-weight="700" fill="#16345f">stable — wasted</text>
+    <text x="269" y="118" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12" fill="#64748b">early change breaks the reusable prefix</text>
+
+    <text x="22" y="164" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14" font-weight="700" fill="#334155">CacheCraft optimized</text>
+    <rect x="154" y="146" width="260" height="26" rx="7" fill="url(#stable)"/>
+    <text x="234" y="164" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12" font-weight="700" fill="#16345f">stable — cached</text>
+    <rect x="420" y="146" width="62" height="26" rx="7" fill="#fb7185"/>
+    <text x="432" y="164" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="11" font-weight="700" fill="#ffffff">volatile</text>
+    <text x="154" y="194" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12" fill="#64748b">longer reusable prefix • less repeated prefill</text>
+
+    <circle cx="42" cy="232" r="16" fill="#eff6ff" stroke="#60a5fa"/>
+    <path d="M45 219 35 233h8l-3 12 11-15h-8Z" fill="#2563eb"/>
+    <text x="68" y="237" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" font-weight="700" fill="#334155">Lower latency</text>
+    <circle cx="194" cy="232" r="16" fill="#f0fdf4" stroke="#4ade80"/>
+    <text x="188" y="238" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="18" font-weight="800" fill="#16a34a">$</text>
+    <text x="220" y="237" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" font-weight="700" fill="#334155">Lower cost</text>
+    <circle cx="340" cy="232" r="16" fill="#f5f3ff" stroke="#a78bfa"/>
+    <path d="M332 240v-7h4v7M339 240v-14h4v14M346 240v-20h4v20" stroke="#7c3aed" stroke-width="2"/>
+    <text x="366" y="237" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" font-weight="700" fill="#334155">More throughput</text>
+  </g>
+
+  <!-- Provider strip -->
+  <g transform="translate(54 626)">
+    <rect width="1436" height="154" rx="18" fill="#ffffff" stroke="#dbe4f0" filter="url(#soft)"/>
+    <text x="28" y="38" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="18" font-weight="800" fill="#111827">Built for inference engineers</text>
+    <text x="28" y="70" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14" fill="#475569">✓ cache-aware layout</text>
+    <text x="28" y="96" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14" fill="#475569">✓ strict schemas + safety by default</text>
+    <text x="28" y="122" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14" fill="#475569">✓ CLI + TypeScript library + CI-friendly manifests</text>
+
+    <line x1="500" y1="28" x2="500" y2="126" stroke="#e2e8f0"/>
+    <text x="536" y="38" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="18" font-weight="800" fill="#111827">Providers</text>
+    <circle cx="556" cy="82" r="24" fill="#ecfdf5" stroke="#10b981"/>
+    <text x="546" y="90" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="22" font-weight="800" fill="#059669">O</text>
+    <text x="596" y="76" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="15" font-weight="800" fill="#111827">OpenAI</text>
+    <text x="596" y="99" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" fill="#64748b">Responses + Chat cache controls</text>
+
+    <circle cx="884" cy="82" r="24" fill="#fff7ed" stroke="#fb923c"/>
+    <text x="871" y="90" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="20" font-weight="800" fill="#c2410c">AI</text>
+    <text x="924" y="76" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="15" font-weight="800" fill="#111827">Anthropic</text>
+    <text x="924" y="99" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" fill="#64748b">Messages + 5m / 1h TTL mapping</text>
+
+    <line x1="1190" y1="28" x2="1190" y2="126" stroke="#e2e8f0"/>
+    <text x="1224" y="48" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="14" fill="#334155">npm i -D</text>
+    <text x="1224" y="72" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="14" font-weight="700" fill="#4f46e5">@mturac/cachecraft</text>
+    <rect x="1224" y="92" width="86" height="28" rx="7" fill="#e8eef8"/>
+    <text x="1242" y="111" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12" font-weight="700" fill="#334155">Apache-2.0</text>
+    <rect x="1320" y="92" width="88" height="28" rx="7" fill="#dcfce7"/>
+    <text x="1342" y="111" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12" font-weight="700" fill="#166534">CI green</text>
+  </g>
+
+  <rect x="0" y="812" width="1536" height="48" rx="0" fill="#0b1424"/>
+  <text x="54" y="843" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14" font-weight="700" fill="#cbd5e1">github.com/mturac/CacheCraft</text>
+  <text x="1482" y="843" text-anchor="end" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14" fill="#94a3b8">provider-neutral • deterministic • offline</text>
+</svg>
