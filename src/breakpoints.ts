@@ -120,13 +120,20 @@ function assertAnthropicTtlOrder(breakpoints: Candidate[]): void {
     return shortSeen;
   });
 
+  if (offender === undefined) {
+    throw new CacheCraftError(
+      "CC_INTERNAL_BREAKPOINT_ERROR",
+      "Anthropic TTL-order violation could not be resolved to a breakpoint."
+    );
+  }
+
   throw new CacheCraftError(
     "CC_ANTHROPIC_TTL_ORDER",
     "Anthropic requires long cache TTL breakpoints to appear before short TTL breakpoints.",
     {
       details: {
-        sectionId: offender?.section.id,
-        horizon: offender?.section.cache.horizon
+        sectionId: offender.section.id,
+        horizon: offender.section.cache.horizon
       }
     }
   );
