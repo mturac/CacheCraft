@@ -93,7 +93,7 @@ function collapsePreferred(candidates: Candidate[]): Candidate[] {
   });
 }
 
-function anthopicTtlOrderIsValid(breakpoints: Candidate[]): boolean {
+function anthropicTtlOrderIsValid(breakpoints: Candidate[]): boolean {
   let shortSeen = false;
   for (const breakpoint of [...breakpoints].sort((left, right) => left.sectionIndex - right.sectionIndex)) {
     if (breakpoint.section.cache.horizon === "short") {
@@ -106,7 +106,7 @@ function anthopicTtlOrderIsValid(breakpoints: Candidate[]): boolean {
 }
 
 function assertAnthropicTtlOrder(breakpoints: Candidate[]): void {
-  if (anthopicTtlOrderIsValid(breakpoints)) {
+  if (anthropicTtlOrderIsValid(breakpoints)) {
     return;
   }
 
@@ -232,7 +232,7 @@ export function selectBreakpoints(
       continue;
     }
 
-    if (provider === "anthropic" && !anthopicTtlOrderIsValid([...required, ...selectedPreferred, candidate])) {
+    if (provider === "anthropic" && !anthropicTtlOrderIsValid([...required, ...selectedPreferred, candidate])) {
       diagnostics.push({
         code: "CC102_PREFERRED_BREAKPOINT_DROPPED",
         severity: "warning",
