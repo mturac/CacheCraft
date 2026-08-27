@@ -1,0 +1,70 @@
+name: Bug report
+description: Report deterministic compilation, validation, CLI, or provider-rendering behavior that is incorrect.
+title: "bug: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not include API keys, private prompts, customer data, or proprietary tool schemas. Reduce the reproduction to synthetic content.
+
+  - type: input
+    id: version
+    attributes:
+      label: CacheCraft version
+      placeholder: 0.1.0 or commit SHA
+    validations:
+      required: true
+
+  - type: dropdown
+    id: provider
+    attributes:
+      label: Provider target
+      options:
+        - generic
+        - openai-responses
+        - openai-chat
+        - anthropic
+        - not provider-specific
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal synthetic reproduction
+      description: Include a sanitized prompt plan and the exact command or API call.
+      render: shell
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: Include the error code, diagnostic code, payload fragment, or manifest diff.
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      placeholder: Node.js version, operating system, installation method
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety check
+      options:
+        - label: I confirmed this report contains no credentials, secrets, private prompts, or customer data.
+          required: true

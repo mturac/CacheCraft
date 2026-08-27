@@ -1,0 +1,72 @@
+{
+  "name": "@mturac/cachecraft",
+  "version": "0.1.0",
+  "description": "A deterministic cache-aware prompt layout compiler for portable LLM prompt caching.",
+  "type": "module",
+  "license": "Apache-2.0",
+  "author": "Mehmet Turac",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mturac/CacheCraft.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mturac/CacheCraft/issues"
+  },
+  "homepage": "https://github.com/mturac/CacheCraft#readme",
+  "keywords": [
+    "llm",
+    "prompt-caching",
+    "prompt-compiler",
+    "cache-aware",
+    "prompt-engineering",
+    "openai",
+    "anthropic",
+    "inference"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "packageManager": "npm@10.9.2",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./schema": "./schema/cachecraft.schema.json",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "cachecraft": "./bin/cachecraft.mjs"
+  },
+  "files": [
+    "bin",
+    "dist",
+    "schema",
+    "examples",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "NOTICE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "npm run build && npm run test:types && node --test",
+    "check": "npm run build && node --check bin/cachecraft.mjs",
+    "verify": "npm run check && npm run test:types && node --test && npm run verify:package",
+    "prepublishOnly": "npm run verify",
+    "test:types": "tsc -p tsconfig.type-tests.json",
+    "verify:package": "node scripts/package-smoke.mjs"
+  },
+  "devDependencies": {
+    "typescript": "5.8.3"
+  },
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  }
+}
