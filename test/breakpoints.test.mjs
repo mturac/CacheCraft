@@ -13,6 +13,15 @@ function section(id, stability, mode, horizon = "long") {
   };
 }
 
+function requestSection() {
+  return {
+    id: "request",
+    lane: "conversation",
+    stability: "request",
+    items: [{ role: "user", content: "Hello" }]
+  };
+}
+
 test("required breakpoints are retained and preferred duplicates collapse", () => {
   const result = compilePromptPlan({
     schemaVersion: "1",
@@ -74,7 +83,8 @@ test("Anthropic drops a preferred long TTL breakpoint after a required short TTL
       {
         ...section("long-preferred", "deployment", "preferred", "long"),
         after: ["short-required"]
-      }
+      },
+      requestSection()
     ]
   }, { provider: "anthropic" });
 
